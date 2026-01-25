@@ -77,7 +77,13 @@ int main(int argc, const char * argv[]) {
         //  it'll read in the wrong data type from buffer[0] and convert it to the first character's hext value
         showView(_min);
         
-        printf("Enter minutes again or hit 'q' to quit:\n");
+        //printf("Enter minutes again or hit 'q' to quit:\n\n");
+        puts("Enter minutes again or hit 'q' to quit:\n");
+        
+        //printf("Enter minutes again or hit 'q' to quit:\n");
+        
+        //puts("Enter minutes again or hit 'q' to quit:");
+        //fflush(stdout);
     }
     
     return EXIT_SUCCESS;
