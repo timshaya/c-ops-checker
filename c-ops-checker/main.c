@@ -15,24 +15,24 @@ float _years = 0.0f;
 
 float convertMinToDays(float m) {
    
-    float _d = (m * 60) * 24;
+    float _d = m / 1440; //24 hours x 60 minutes per hour
     return _d;
 }
 
 float convertMinToYears(float m) {
     
-    float _y = ((m * 60) * 24) * 356;
+    float _y = m / 525600; //365 days x 24 hrs x 60 min = 525,600
     return _y;
 }
 
 void showView(float m) {
     
-    printf("You entered this many minutes: %.2f\n\n",_min);
+    printf("You entered this many minutes: %f\n\n",m);
     
-    _days = convertMinToDays(_min);
-    _years = convertMinToYears(_min);
+    _days = convertMinToDays(m);
+    _years = convertMinToYears(m);
     
-    printf("Which is this many days: %.8f\n\nAnd this many years: %.8f\n\n", _days, _years);
+    printf("Which is this many days: %f\n\nAnd this many years: %f\n\n", _days, _years);
 }
 
 int main(int argc, const char * argv[]) {
@@ -44,6 +44,10 @@ int main(int argc, const char * argv[]) {
         //quit the app
         if(buffer[0] == 'q') break;
         
+        //sanitize buffer[0]
+        
+        
+        _min = buffer[0];
         showView(_min);
         printf("Enter minutes again or hit 'q' to quit:\n");
     }
