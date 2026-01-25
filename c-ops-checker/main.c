@@ -1,12 +1,14 @@
 //
 //  main.c
-//  c-ops-checker
+//  c-ops-checker - skeleton app for exploring basic operations in C
 //
 //  Created by g t2 on 1/24/26.
 //
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+#include "msg/messages.h"
 
 char buffer[256];
 float _min =  0.0f;
@@ -27,7 +29,7 @@ float convertMinToYears(float m) {
 
 void showView(float m) {
     
-    printf("You entered this many minutes: %f\n\n",m);
+    printf("You entered this many minutes: %f\n\n", m);
     
     _days = convertMinToDays(m);
     _years = convertMinToYears(m);
@@ -44,11 +46,31 @@ int main(int argc, const char * argv[]) {
         //quit the app
         if(buffer[0] == 'q') break;
         
-        //sanitize buffer[0]
-        
-        
-        _min = buffer[0];
-        showView(_min);
+        //Enter 'h' for help
+        if(buffer[0] == 'h') {
+            printf("");
+            continue;
+        }
+
+        // Reject NaN or infinities. e.g. Enter "10e545458457346 34" to get "inf"
+        if (!isfinite(buffer[0])) {
+            printf(get_error_msg(MSG_ERROR_MUST_BE_FINITE_NUM));
+            continue;
+        }
+
+        // Clamp to a sane magnitude, e.g. +/-1e6
+        if (fabsf(buffer[0]) > 1e6f) {
+            printf(get_error_msg(MSG_ERROR_VALUES_OUT_OF_RANGE));
+            continue;
+        }
+                
+        //assigns value of buffer[] to address of _min while casting to float
+        if (sscanf(buffer, "%f", &_min) != 1) {
+            printf("Invalid input\n");
+            continue;
+        }
+
+        showView(_min);//_min buffer[0])
         printf("Enter minutes again or hit 'q' to quit:\n");
     }
     
