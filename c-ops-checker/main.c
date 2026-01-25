@@ -14,6 +14,8 @@ char buffer[256];
 float _min =  0.0f;
 float _days = 0.0f;
 float _years = 0.0f;
+char *endptr;
+
 
 float convertMinToDays(float m) {
    
@@ -53,8 +55,8 @@ int main(int argc, const char * argv[]) {
         }
 
         // Reject NaN or infinities. e.g. Enter "10e545458457346 34" to get "inf"
-        if (!isfinite(buffer[0])) {
-            printf(get_error_msg(MSG_ERROR_MUST_BE_FINITE_NUM));
+        if (!isfinite(strtod(buffer, &endptr)) || endptr == buffer) {
+            printf("%s", get_error_msg(MSG_ERROR_MUST_BE_FINITE_NUM));
             continue;
         }
 
@@ -63,14 +65,17 @@ int main(int argc, const char * argv[]) {
             printf(get_error_msg(MSG_ERROR_VALUES_OUT_OF_RANGE));
             continue;
         }
-                
+        
         //assigns value of buffer[] to address of _min while casting to float
         if (sscanf(buffer, "%f", &_min) != 1) {
             printf("Invalid input\n");
             continue;
         }
 
-        showView(_min);//_min buffer[0])
+        //if sending buffer[0]) directly, instead of _min after "&_min" above,
+        //  it'll read in the wrong data type from buffer[0] and convert it to the first character's hext value
+        showView(_min);
+        
         printf("Enter minutes again or hit 'q' to quit:\n");
     }
     
