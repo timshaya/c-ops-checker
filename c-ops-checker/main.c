@@ -16,7 +16,6 @@ float _days = 0.0f;
 float _years = 0.0f;
 char *endptr;
 
-
 float convertMinToDays(float m) {
    
     float _d = m / 1440; //24 hours x 60 minutes per hour
@@ -59,7 +58,8 @@ int main(int argc, const char * argv[]) {
             printf("%s", get_error_msg(MSG_ERROR_MUST_BE_FINITE_NUM));
             continue;
         }
-
+        
+        //TODO: fix issue "Using floating point absolute value function 'fabsf' when argument is of integer type / Format string is not a string literal (potentially insecure)"
         // Clamp to a sane magnitude, e.g. +/-1e6
         if (fabsf(buffer[0]) > 1e6f) {
             printf(get_error_msg(MSG_ERROR_VALUES_OUT_OF_RANGE));
