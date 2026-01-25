@@ -59,10 +59,11 @@ int main(int argc, const char * argv[]) {
             continue;
         }
         
-        //TODO: fix issue "Using floating point absolute value function 'fabsf' when argument is of integer type / Format string is not a string literal (potentially insecure)"
-        // Clamp to a sane magnitude, e.g. +/-1e6
-        if (fabsf(buffer[0]) > 1e6f) {
-            printf(get_error_msg(MSG_ERROR_VALUES_OUT_OF_RANGE));
+        //fix issue "Using floating point absolute value function 'fabsf' when argument is of integer type /
+        //Format string is not a string literal (potentially insecure)"
+        // Clamp using abs() for char (integer type)
+        if (abs((int)buffer[0]) > 1000000) {  // 1e6 as int
+            printf("%s", get_error_msg(MSG_ERROR_VALUES_OUT_OF_RANGE));  // Safe format
             continue;
         }
         
