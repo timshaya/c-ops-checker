@@ -30,17 +30,19 @@ float convertMinToYears(float m) {
 
 void showView(float m) {
     
-    printf("You entered this many minutes: %f\n\n", m);
+    //printf( "You entered this many minutes: %f\n\n", m);
+    printf(get_usr_msg(MSG_YOU_ENTERED), m);
     
     _days = convertMinToDays(m);
     _years = convertMinToYears(m);
     
-    printf("Which is this many days: %f\n\nAnd this many years: %f\n\n", _days, _years);
+    //"Which is this many days: %f\n\nAnd this many years: %f\n\n"
+    printf(get_usr_msg(MSG_DAYS_N_YEARS), _days, _years);
 }
 
 int main(int argc, const char * argv[]) {
     
-    printf("Enter a number of minutes:\n");
+    printf(get_usr_msg(MSG_ENTER_NUM_MIN)); // "Enter a number of minutes:\n"
 
     while(fgets(buffer, sizeof buffer, stdin)) {
         
@@ -73,8 +75,6 @@ int main(int argc, const char * argv[]) {
             continue;
         }
 
-        //if sending buffer[0]) directly, instead of _min after "&_min" above,
-        //  it'll read in the wrong data type from buffer[0] and convert it to the first character's hext value
         showView(_min);
         
         //printf("Enter minutes again or hit 'q' to quit:\n\n");
