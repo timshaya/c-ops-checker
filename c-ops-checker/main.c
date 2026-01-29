@@ -47,11 +47,15 @@ int main(int argc, const char * argv[]) {
     
     //less accessible to attackers here than in its former global scope:
     char buffer[256];
+    const float MIN_ALLOWED = 0.0f;
+    const float MAX_ALLOWED = 1000000.0f;
 
     //safer against format‑string vulnerabilityn than just 'printf(get_usr_msg(MSG_ENTER_NUM_MIN))'
     printf("%s", get_usr_msg(MSG_ENTER_NUM_MIN));
 
     while(fgets(buffer, sizeof buffer, stdin)) {
+        
+        //TODO: trim white space - currently breaks input and send it into "Value must be a finite number." or "Value is out of allowed range."
         
         //quit the app
         if(buffer[0] == 'q') break;
@@ -68,11 +72,8 @@ int main(int argc, const char * argv[]) {
             continue;
         }
         
-        //fix issue "Using floating point absolute value function 'fabsf' when argument is of integer type /
-        //Format string is not a string literal (potentially insecure)"
-        // Clamp using abs() for char (integer type)
-        if (abs((int)buffer[0]) > 1000000) {  // 1e6 as int
-            printf("%s", get_error_msg(MSG_ERROR_VALUES_OUT_OF_RANGE));  // Safe format
+        if (_min < MIN_ALLOWED || _min > MAX_ALLOWED) {
+            printf("%s", get_error_msg(MSG_ERROR_VALUES_OUT_OF_RANGE));
             continue;
         }
         
