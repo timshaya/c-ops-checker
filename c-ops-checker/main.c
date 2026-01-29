@@ -10,7 +10,6 @@
 #include <math.h>
 #include "msg/messages.h"
 
-char buffer[256];
 float _min =  0.0f;
 float _days = 0.0f;
 float _years = 0.0f;
@@ -30,19 +29,21 @@ float convertMinToYears(float m) {
 
 void showView(float m) {
     
-    //printf( "You entered this many minutes: %f\n\n", m);
     printf(get_usr_msg(MSG_YOU_ENTERED), m);
     
     _days = convertMinToDays(m);
     _years = convertMinToYears(m);
     
-    //"Which is this many days: %f\n\nAnd this many years: %f\n\n"
     printf(get_usr_msg(MSG_DAYS_N_YEARS), _days, _years);
 }
 
 int main(int argc, const char * argv[]) {
     
-    printf(get_usr_msg(MSG_ENTER_NUM_MIN)); // "Enter a number of minutes:\n"
+    //less accessible to attackers here than in its former global scope:
+    char buffer[256];
+
+    //safer against format‑string vulnerabilityn than just 'printf(get_usr_msg(MSG_ENTER_NUM_MIN))'
+    printf("%s", get_usr_msg(MSG_ENTER_NUM_MIN));
 
     while(fgets(buffer, sizeof buffer, stdin)) {
         
@@ -77,13 +78,7 @@ int main(int argc, const char * argv[]) {
 
         showView(_min);
         
-        //printf("Enter minutes again or hit 'q' to quit:\n\n");
         puts("Enter minutes again or hit 'q' to quit:\n");
-        
-        //printf("Enter minutes again or hit 'q' to quit:\n");
-        
-        //puts("Enter minutes again or hit 'q' to quit:");
-        //fflush(stdout);
     }
     
     return EXIT_SUCCESS;
