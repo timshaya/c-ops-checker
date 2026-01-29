@@ -16,8 +16,9 @@ static const char* messages[] = {
 
 static const char* messagesUsr[] = {
     "Enter a number of minutes:\n",
-    "You entered this many minutes: %f\n\n",
-    "Which is this many days: %f\n\nAnd this many years: %f\n\n"
+    "You entered this many minutes:", //"You entered this many minutes: %f\n\n"
+    "Which is this many days: ", //"Which is this many days: %f\n\nAnd this many years: %f\n\n"
+    "And this many years: " //"Which is this many days: %f\n\nAnd this many years: %f\n\n"
 };
 
 const char* get_error_msg(ErrorMsgs code) {

@@ -17,7 +17,8 @@ typedef enum {
 typedef enum {
     MSG_ENTER_NUM_MIN, //"Enter a number of minutes:\n"
     MSG_YOU_ENTERED, //"You entered this many minutes: %f\n\n"
-    MSG_DAYS_N_YEARS //"Which is this many days: %f\n\nAnd this many years: %f\n\n",
+    MSG_DAYS, //"Which is this many days: %f\n\nAnd this many years: %f\n\n",
+    MSG_YEARS //" " 
 } UsrMsgs;
 
 const char* get_error_msg(ErrorMsgs code);

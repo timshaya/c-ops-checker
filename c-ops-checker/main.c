@@ -29,12 +29,18 @@ float convertMinToYears(float m) {
 
 void showView(float m) {
     
-    printf(get_usr_msg(MSG_YOU_ENTERED), m);
+    //safer than just using 'printf(get_usr_msg(MSG_YOU_ENTERED), m);'
+    //  for "You entered this many minutes: %f\n\n"
+    const char *msg1 = get_usr_msg(MSG_YOU_ENTERED); // should NOT contain %
+    printf("%s %f\n", msg1, m);
     
     _days = convertMinToDays(m);
     _years = convertMinToYears(m);
     
-    printf(get_usr_msg(MSG_DAYS_N_YEARS), _days, _years);
+    //safer than just using 'printf(get_usr_msg(MSG_DAYS_N_YEARS), _days, _years);'
+    const char *msg2 = get_usr_msg(MSG_DAYS);
+    const char *msg2_2 = get_usr_msg(MSG_YEARS);
+    printf("%s %f\n%s %f\n\n", msg2, _days, msg2_2, _years);
 }
 
 int main(int argc, const char * argv[]) {
