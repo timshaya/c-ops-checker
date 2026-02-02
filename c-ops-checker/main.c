@@ -8,12 +8,29 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <ctype.h>
+#include <string.h>
 #include "msg/messages.h"
 
 float _min =  0.0f;
 float _days = 0.0f;
 float _years = 0.0f;
 char *endptr;
+
+char *trim_whitespace(char *str) {
+    char *end;
+
+    while (isspace((unsigned char)*str)) str++;
+
+    if (*str == '\0')
+        return str;
+
+    end = str + strlen(str) - 1;
+    while (end > str && isspace((unsigned char)*end)) end--;
+
+    end[1] = '\0';
+    return str;
+}
 
 float convertMinToDays(float m) {
    
@@ -55,9 +72,9 @@ int main(int argc, const char * argv[]) {
 
     while(fgets(buffer, sizeof buffer, stdin)) {
         
-        //TODO: trim white space - currently breaks input and send it into "Value must be a finite number." or "Value is out of allowed range."
+        trim_whitespace(buffer);
         
-        //quit the app
+        //Enter 'q'  to quit the app
         if(buffer[0] == 'q') break;
         
         //Enter 'h' for help
