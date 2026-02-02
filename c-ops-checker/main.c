@@ -8,29 +8,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <ctype.h>
-#include <string.h>
 #include "msg/messages.h"
+#include "util/string_utils.h"
 
 float _min =  0.0f;
 float _days = 0.0f;
 float _years = 0.0f;
 char *endptr;
-
-char *trim_whitespace(char *str) {
-    char *end;
-
-    while (isspace((unsigned char)*str)) str++;
-
-    if (*str == '\0')
-        return str;
-
-    end = str + strlen(str) - 1;
-    while (end > str && isspace((unsigned char)*end)) end--;
-
-    end[1] = '\0';
-    return str;
-}
 
 float convertMinToDays(float m) {
    
@@ -64,8 +48,6 @@ int main(int argc, const char * argv[]) {
     
     //less accessible to attackers here than in its former global scope:
     char buffer[256];
-    const float MIN_ALLOWED = 0.0f;
-    const float MAX_ALLOWED = 1000000.0f;
 
     //safer against format‑string vulnerabilityn than just 'printf(get_usr_msg(MSG_ENTER_NUM_MIN))'
     printf("%s", get_usr_msg(MSG_ENTER_NUM_MIN));
@@ -79,18 +61,13 @@ int main(int argc, const char * argv[]) {
         
         //Enter 'h' for help
         if(buffer[0] == 'h') {
-            printf("");
+            printf("Help placeholder text for now.\n\nEnter minutes again or hit 'q' to quit:\n");
             continue;
         }
 
         // Reject NaN or infinities. e.g. Enter "10e545458457346 34" to get "inf"
         if (!isfinite(strtod(buffer, &endptr)) || endptr == buffer) {
             printf("%s", get_error_msg(MSG_ERROR_MUST_BE_FINITE_NUM));
-            continue;
-        }
-        
-        if (_min < MIN_ALLOWED || _min > MAX_ALLOWED) {
-            printf("%s", get_error_msg(MSG_ERROR_VALUES_OUT_OF_RANGE));
             continue;
         }
         
