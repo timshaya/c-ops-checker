@@ -4,12 +4,11 @@
 //
 //  Created by g t2 on 1/24/26.
 //
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include "msg/messages.h"
-#include "util/string_utils.h"
+#include "util/input_utils.h"
 
 float _min =  0.0f;
 float _days = 0.0f;
@@ -65,6 +64,12 @@ int main(int argc, const char * argv[]) {
             continue;
         }
 
+        //Sanitize input to reduce risk of fuzzing
+        if (!is_simple_float(buffer)) {
+            printf("Invalid numeric format\n");
+            continue;
+        }
+        
         // Reject NaN or infinities. e.g. Enter "10e545458457346 34" to get "inf"
         if (!isfinite(strtod(buffer, &endptr)) || endptr == buffer) {
             printf("%s", get_error_msg(MSG_ERROR_MUST_BE_FINITE_NUM));
