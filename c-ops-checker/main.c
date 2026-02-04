@@ -48,6 +48,9 @@ int main(int argc, const char * argv[]) {
     //less accessible to attackers here than in its former global scope:
     char buffer[256];
 
+    const double ALLOWED_MIN = -1e12;
+    const double ALLOWED_MAX = 1e12; //1,901,285 years should suffice for now?
+    
     //safer against format‑string vulnerabilityn than just 'printf(get_usr_msg(MSG_ENTER_NUM_MIN))'
     printf("%s", get_usr_msg(MSG_ENTER_NUM_MIN));
 
@@ -56,7 +59,7 @@ int main(int argc, const char * argv[]) {
         trim_whitespace(buffer);
         
         //Enter 'q'  to quit the app
-        if(buffer[0] == 'q') break;
+        if(buffer[0] == 'q' || buffer[1] == '\n' || buffer[0] == '\0') break;
         
         //Enter 'h' for help
         if(buffer[0] == 'h') {
@@ -67,6 +70,13 @@ int main(int argc, const char * argv[]) {
         //Sanitize input to reduce risk of fuzzing
         if (!is_simple_float(buffer)) {
             printf("Invalid numeric format\n");
+            continue;
+        }
+        
+        //TODO: how to sanitize input against spiking?
+        float parsed;
+        if(!sanitize_and_parse_float(buffer, &parsed, ALLOWED_MIN, ALLOWED_MAX)) {
+            printf("%s", "No spiking, please\n");
             continue;
         }
         
@@ -82,6 +92,7 @@ int main(int argc, const char * argv[]) {
             continue;
         }
 
+        _min = parsed; 
         showView(_min);
         
         puts("Enter minutes again or hit 'q' to quit:\n");
