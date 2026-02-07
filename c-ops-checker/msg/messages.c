@@ -8,10 +8,11 @@
 #include "messages.h"
 #include <stdio.h>  
 
-static const char* messages[] = {
+static const char* messagesError[] = {
     "Enter 'q' to quit.\nEnter 'h' for Help.\nOtherwise, enter a width & height as decimal numbers, like the prompt asks.\n",
     "Value must be a finite number.\n\nEnter minutes:\n",
-    "Value is out of allowed range.\n\nEnter minutes: \n"
+    "Value is out of allowed range.\n\nEnter minutes: \n",
+    "No spiking, please\n"
 };
 
 static const char* messagesUsr[] = {
@@ -22,8 +23,8 @@ static const char* messagesUsr[] = {
 };
 
 const char* get_error_msg(ErrorMsgs code) {
-    size_t num_msgs = sizeof(messages) / sizeof(messages[0]);
-    return (code >= 0 && code < num_msgs) ? messages[code] : "Unknown error";
+    size_t num_msgs = sizeof(messagesError) / sizeof(messagesError[0]);
+    return (code >= 0 && code < num_msgs) ? messagesError[code] : "Unknown error";
 }
 
 const char* get_usr_msg(UsrMsgs code) {

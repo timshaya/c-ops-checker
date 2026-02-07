@@ -76,7 +76,7 @@ int main(int argc, const char * argv[]) {
         //TODO: how to sanitize input against spiking?
         float parsed;
         if(!sanitize_and_parse_float(buffer, &parsed, ALLOWED_MIN, ALLOWED_MAX)) {
-            printf("%s", "No spiking, please\n");
+            printf("%s", get_error_msg(MSG_ERROR_SPIKING)); // "No spiking, please\n");
             continue;
         }
         

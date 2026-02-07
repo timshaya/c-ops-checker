@@ -11,7 +11,8 @@
 typedef enum {
     MSG_HELP_MENU,
     MSG_ERROR_MUST_BE_FINITE_NUM,
-    MSG_ERROR_VALUES_OUT_OF_RANGE
+    MSG_ERROR_VALUES_OUT_OF_RANGE,
+    MSG_ERROR_SPIKING
 } ErrorMsgs;
 
 typedef enum {
